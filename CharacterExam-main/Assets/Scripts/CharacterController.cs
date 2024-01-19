@@ -78,4 +78,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+     void Jump()
+    {
+
+        _isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
+
+        if(_isGrounded && _playerGravity.y < 0)
+        {
+            _playerGravity.y = -2;
+        }
+
+        if(_isGrounded && Input.GetButtonDown("Jump"))
+        {
+            _playerGravity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
+        }
+
+        _playerGravity.y += _gravity * Time.deltaTime;
+        
+        _controller.Move(_playerGravity * Time.deltaTime);
+    }
+
 }
